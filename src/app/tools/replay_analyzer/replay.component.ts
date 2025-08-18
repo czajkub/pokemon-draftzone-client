@@ -7,6 +7,8 @@ import { SpriteComponent } from '../../images/sprite/sprite.component';
 import { ReplayChartComponent } from './replay-chart/replay-chart.component';
 import { ReplayData } from './replay.interface';
 
+import { MatGridListModule } from '@angular/material/grid-list'
+ 
 @Component({
   selector: 'replay-analyzer',
   standalone: true,
@@ -17,6 +19,8 @@ import { ReplayData } from './replay.interface';
     FormsModule,
     SpriteComponent,
     ReplayChartComponent,
+    
+    MatGridListModule,
   ],
 })
 export class ReplayComponent implements OnInit {
