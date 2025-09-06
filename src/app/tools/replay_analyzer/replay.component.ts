@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ReplayService } from '../../services/replay.service';
@@ -24,6 +24,9 @@ import { MatGridListModule } from '@angular/material/grid-list'
   ],
 })
 export class ReplayComponent implements OnInit {
+  private replayService = inject(ReplayService);
+  private route = inject(ActivatedRoute);
+
   private _replayURI: string = '';
   replayData: ReplayData | undefined;
   analyzed: boolean = true;
@@ -35,11 +38,6 @@ export class ReplayComponent implements OnInit {
     this.analyzed = false;
     this._replayURI = value;
   }
-
-  constructor(
-    private replayService: ReplayService,
-    private route: ActivatedRoute,
-  ) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {

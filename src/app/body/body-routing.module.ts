@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BattleZonePath } from '../battle-zone/battle-zone-routing.module';
 import { HomeComponent } from '../pages/homepage/homepage.component';
 import { SettingsComponent } from '../pages/settings/settings.component';
 import { PlannerComponent } from '../planner/plannner.component';
 import { DebugPath } from '../debug/debug-routing.module';
+import { LeagueZonePath } from '../league-zone/league-zone-routing.module';
 import { ToolsPath } from '../tools/tools.router';
 
 const routes: Routes = [
@@ -16,17 +16,13 @@ const routes: Routes = [
     loadChildren: () =>
       import('../pages/page.module').then((m) => m.PageModule),
   },
-  // {
-  //   path: BattleZonePath,
-  //   loadChildren: () =>
-  //     import('../battle-zone/battle-zone.module').then(
-  //       (m) => m.BattleZoneModule,
-  //     ),
-  // },
-  // {
-  //   path: 'test',
-  //   loadChildren: () => import('../test/test.module').then((m) => m.TestModule),
-  // },
+  {
+    path: LeagueZonePath,
+    loadChildren: () =>
+      import('../league-zone/league-zone.module').then(
+        (m) => m.LeagueZoneModule,
+      ),
+  },
   {
     path: ToolsPath,
     loadChildren: () =>

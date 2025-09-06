@@ -1,20 +1,10 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  forwardRef,
-  HostBinding,
-  HostListener,
-  Input,
-  Output,
-  Renderer2,
-} from '@angular/core';
+import { Component, ElementRef, EventEmitter, forwardRef, HostBinding, HostListener, Input, Output, Renderer2, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'dz-slide-toggle',
+  selector: 'pdz-slide-toggle',
   standalone: true,
   imports: [CommonModule, MatIconModule],
   templateUrl: './slide-toggle.component.html',
@@ -28,13 +18,16 @@ import { MatIconModule } from '@angular/material/icon';
   ],
 })
 export class SlideToggleComponent implements ControlValueAccessor {
+  private renderer = inject(Renderer2);
+  private elRef = inject(ElementRef);
+
   @Input() disabled = false;
   @Input() label?: string;
   @Input() onIcon = 'check';
   @Input() offIcon = 'remove';
   @Input() onSVG?: string;
   @Input() offSVG?: string;
-
+  @Input() labelPosition: 'before' | 'after' = 'after';
   @HostBinding('class.checked') checkedState = false;
 
   @Output() checkedChange = new EventEmitter<boolean>();
@@ -43,11 +36,6 @@ export class SlideToggleComponent implements ControlValueAccessor {
 
   private onChange = (value: boolean) => {};
   private onTouched = () => {};
-
-  constructor(
-    private renderer: Renderer2,
-    private elRef: ElementRef,
-  ) {}
 
   writeValue(value: boolean): void {
     this.checkedState = value;

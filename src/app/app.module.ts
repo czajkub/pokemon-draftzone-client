@@ -2,32 +2,30 @@ import {
   provideHttpClient,
   withInterceptorsFromDi,
 } from '@angular/common/http';
-import { NgModule, isDevMode } from '@angular/core';
+import { isDevMode, NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { AuthModule } from '@auth0/auth0-angular';
+import { MARKED_OPTIONS, provideMarkdown } from 'ngx-markdown';
 import { AppComponent } from './app.component';
 import { BodyModule } from './body/body.module';
 import { TopNavbarComponent } from './pages/top-navbar/top-navbar.component';
-import { CommonModule } from '@angular/common';
-import { MARKED_OPTIONS, provideMarkdown } from 'ngx-markdown';
 
 @NgModule({
   bootstrap: [AppComponent],
+  declarations: [AppComponent],
   imports: [
-    CommonModule,
-    TopNavbarComponent,
     BodyModule,
     BrowserAnimationsModule,
     AuthModule.forRoot({
-      domain: 'dev-wspjxi5f6mjqsjea.us.auth0.com',
+      domain: 'login.pokemondraftzone.com',
       clientId: 'nAyvHSOL1PbsFZfodzgIjRgYBUA1M1DH',
       useRefreshTokens: true,
       cacheLocation: 'localstorage',
       authorizationParams: {
         redirect_uri: window.location.origin,
         audience: 'https://dev-wspjxi5f6mjqsjea.us.auth0.com/api/v2/',
-        scope: 'openid profile email read:username',
+        scope: 'openid profile email read:username offline_access',
       },
       httpInterceptor: {
         allowedList: [
@@ -49,8 +47,8 @@ import { MARKED_OPTIONS, provideMarkdown } from 'ngx-markdown';
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000',
     }),
+    TopNavbarComponent,
   ],
-  declarations: [AppComponent],
   providers: [
     provideHttpClient(withInterceptorsFromDi()),
     provideMarkdown({
@@ -61,6 +59,7 @@ import { MARKED_OPTIONS, provideMarkdown } from 'ngx-markdown';
         }),
       },
     }),
+    TopNavbarComponent,
   ],
 })
 export class AppModule {}

@@ -1,0 +1,10 @@
+<div class="trades-container">
+  <div class="stage">
+    <div class="stage-header">Week 4</div>
+    <div class="stage-body">
+      @for (tradeLog of tradeLogs; track tradeLog) {
+        <pdz-trade-card [tradeLog]="tradeLog"></pdz-trade-card>
+      }
+    </div>
+  </div>
+</div>
