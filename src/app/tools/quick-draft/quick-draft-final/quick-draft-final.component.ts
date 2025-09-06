@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { toPSString } from '../../../../../utils/teambuilder.utils';
@@ -10,10 +10,11 @@ import { typeColor } from '../../../util/styling';
 import { ToolsPath } from '../../tools.router';
 import { QDPokemon } from '../quick-draft-picks/quick-draft-picks.component';
 import { QDSettings } from '../quick-draft-setting/quick-draft-setting.component';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'pdz-quick-draft-final',
-  imports: [SpriteComponent, MatButtonModule, RouterLink],
+  imports: [SpriteComponent, MatButtonModule, RouterLink, AsyncPipe],
   templateUrl: './quick-draft-final.component.html',
   styleUrls: [
     './quick-draft-final.component.scss',
@@ -21,6 +22,9 @@ import { QDSettings } from '../quick-draft-setting/quick-draft-setting.component
   ],
 })
 export class QuickDraftFinalComponent {
+  private tptService = inject(ThirdPartyToolService);
+  private authService = inject(AuthService);
+
   @Input({ required: true })
   draft!: QDPokemon[];
 
@@ -32,11 +36,6 @@ export class QuickDraftFinalComponent {
 
   draftPath = DraftOverviewPath;
   toolsPath = ToolsPath;
-
-  constructor(
-    private tptService: ThirdPartyToolService,
-    private authService: AuthService,
-  ) {}
 
   get teamIds() {
     return this.draft.map((pokemon) => pokemon.id);
@@ -56,8 +55,8 @@ export class QuickDraftFinalComponent {
     this.restartDraft.emit();
   }
 
-  get loggedInUser(): string {
-    return this.authService._userSubject.value?.username ?? 'Pokemon DraftZone';
+  get loggedInUser() {
+    return this.authService.user$;
   }
 
   get teamPaste() {

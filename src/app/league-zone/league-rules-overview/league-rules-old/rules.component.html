@@ -1,0 +1,49 @@
+<div class="rules-container">
+  <button class="back-button" routerLink="/leagues/pdbls2" mat-flat-button>
+    Back
+  </button>
+  <div class="rules-header">
+    <h1 class="rules-title">League Rules</h1>
+  </div>
+</div>
+
+<div class="rule-wrapper">
+  <div class="rule-content">
+    <div>
+      <mat-accordion class="level3">
+        @for (ruleCategory of leagueRules; track $index) {
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <span class="rule-title">{{ ruleCategory.title }}</span>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ol class="rule-description">
+              @for (rule of ruleCategory.description; track $index) {
+                @if (isRuleString(rule)) {
+                  <li>{{ rule }}</li>
+                }
+                @if (isRuleList(rule)) {
+                  <li>
+                    @if (rule.text) {
+                      <ng-container>
+                        {{ rule.text }}
+                      </ng-container>
+                    }
+                    @if (rule.list) {
+                      <ul>
+                        @for (subRule of rule.list; track $index) {
+                          <li>{{ subRule }}</li>
+                        }
+                      </ul>
+                    }
+                  </li>
+                }
+              }
+            </ol>
+          </mat-expansion-panel>
+        }
+      </mat-accordion>
+    </div>
+  </div>
+</div>

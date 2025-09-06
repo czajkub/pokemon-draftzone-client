@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ApiService } from './api.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
@@ -8,20 +8,18 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class UploadService {
+  private apiService = inject(ApiService);
+  private http = inject(HttpClient);
+
   private serverUrl = `${environment.tls ? 'https' : 'http'}://${
     environment.apiUrl
   }`;
-
-  constructor(
-    private apiService: ApiService,
-    private http: HttpClient,
-  ) {}
 
   getUploadLink(
     filename: string,
     contentType: string,
   ): Observable<{ url: string; key: string }> {
-    return this.apiService.get(`file/upload-url`, true, {
+    return this.apiService.get(`file/league-upload`, true, {
       filename,
       contentType,
     });
