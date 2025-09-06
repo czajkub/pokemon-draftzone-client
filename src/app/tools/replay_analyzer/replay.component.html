@@ -32,30 +32,27 @@
   </div>
 </div>
 <!-- <loading *ngIf="analyzed && !replayData"></loading> -->
-<div *ngIf="replayData" class="flex justify-center w-full p-2">
-  <div
-    class="flex flex-col items-center p-2 border-2 max-w-full w-fit bg-menu-100 rounded-xl border-menu-400"
-  >
-    <div class="flex space-x-4 p-1 text-lg">
-      <div>
+<mat-card *ngIf="replayData" class="flex justify-center w-full p-2">
+  <mat-card-title class="flex space-x-4 p-1 text-lg columns-4">
+      <div class="flex space-x-1">
         <label class="font-semibold text-symbolColor-sub" for="format">
           Format:
         </label>
         <span id="format">{{ replayData.gametype }}</span>
       </div>
-      <div>
+      <div class="flex space-x-1">
         <label class="font-semibold text-symbolColor-sub" for="gen">
           Generation:
         </label>
         <span id="gen"> {{ replayData.genNum }} </span>
       </div>
-      <div>
+      <div class="flex space-x-1">
         <label class="font-semibold text-symbolColor-sub" for="turns">
           Turns:
         </label>
         <span id="turns"> {{ replayData.turns }} </span>
       </div>
-      <div>
+      <div class="flex space-x-1">
         <label class="font-semibold text-symbolColor-sub" for="gameTime">
           Game Time:
         </label>
@@ -64,7 +61,11 @@
           {{ remainingSeconds(replayData.gameTime) }} seconds</span
         >
       </div>
-    </div>
+    </mat-card-title>
+  <mat-card-content
+    class="flex flex-col items-center p-2 border-2 max-w-full w-fit bg-menu-100 rounded-xl border-menu-400"
+  >
+    
     <div class="space-y-4 w-fit max-w-full">
       <div
         *ngFor="let player of replayData.stats; let playerNum = index"
@@ -183,10 +184,21 @@
                   {{ mon.hpRestored | number: "1.0-0" }}%
                 </div>
                 <div *ngIf="mon.moveset && mon.moveset.length > 0">
-                  <span class="font-semibold"> Moveset: </span>
-                  <ul class="list-disc pl-4">
+                  <!-- <ul class="list-disc pl-4">
                     <li *ngFor="let move of mon.moveset">{{ move }}</li>
-                  </ul>
+                  </ul> -->
+                  <mat-accordion>  
+                    <mat-expansion-panel>
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                          Moveset:
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <div *ngFor="let move of mon.moveset">
+                        • {{ move }}
+                      </div>
+                    </mat-expansion-panel>
+                  </mat-accordion>
                 </div>
               </div>
             </div>
@@ -213,8 +225,8 @@
         ></replay-chart>
       </div>
     </div>
-  </div>
-</div>
+  </mat-card-content>
+</mat-card>
 
 <div *ngIf="replayData" class="flex justify-center w-full p-2">
   <div

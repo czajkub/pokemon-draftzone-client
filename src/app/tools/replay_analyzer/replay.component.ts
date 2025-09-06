@@ -8,6 +8,9 @@ import { ReplayChartComponent } from './replay-chart/replay-chart.component';
 import { ReplayData } from './replay.interface';
 
 import { MatGridListModule } from '@angular/material/grid-list'
+import { MatTreeModule } from '@angular/material/tree';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatCardModule } from '@angular/material/card';
  
 @Component({
   selector: 'replay-analyzer',
@@ -19,9 +22,11 @@ import { MatGridListModule } from '@angular/material/grid-list'
     FormsModule,
     SpriteComponent,
     ReplayChartComponent,
-    
     MatGridListModule,
-  ],
+    MatTreeModule,
+    MatExpansionModule,
+    MatCardModule,
+],
 })
 export class ReplayComponent implements OnInit {
   private _replayURI: string = '';
